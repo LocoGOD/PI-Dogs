@@ -37,7 +37,7 @@ const reducer = (state = initialState, action) => {
         case FILTER_BY_TEMPERAMENT:
               return { ...state, allDogs: action.payload};
 
-        // Caso para manejar el posteo de un perro:
+        // Caso para manejar el posteo de un perro, nos guardamos los objetos que posteemos en la propiedad dbDogs
         case POST_DOG:
             return{...state, dbDogs: action.payload}
     

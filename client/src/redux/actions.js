@@ -117,6 +117,8 @@ export const filterDogsByTemperament = (temperament) => {
 // Accion para enviar los datos del formulario a la base de datos mediante axios y los metodos ya definidos en el Back
 export const postDog = (formData) => {
   return async function (dispatch) {
+    // Una vez recibidos los datos del form en formData, los posteamos y nos quedamos con el objeto creado para trabajar
+    // tambien lo almacenamos en el estado global en caso lo necesitemos
     try {
       const {data} = await axios.post('http://localhost:3001/dogs', formData);
       return dispatch({ type: POST_DOG, payload: data })} 
