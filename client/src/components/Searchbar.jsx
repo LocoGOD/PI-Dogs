@@ -18,8 +18,7 @@ const SearchBar = () => {
    // Llamamos a la acción importada para obtener el perro por nombre, con argumento usando al estado local
    // Limpiamos el valor del estado local para futuras búsquedas
    const handleSearch = () => {
-   dispatch(getDogsByName(name))
-   setName("")}
+   dispatch(getDogsByName(name))}
 
 
    // Renderizado

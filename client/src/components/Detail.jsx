@@ -9,17 +9,25 @@ const Detail = () => {
   // Utilizar useSelector para obtener los perros desde el estado global
   const dogs = useSelector((state) => state.allDogs);
 
-  // Buscamos la raza específica en el estado global (dogs) con ese ID de params y lo guardamos en una variable
-  const dog = dogs.find((dog) => dog.id === parseInt(id));
+  // Tambien para obtener los perros creados
+  // const dbDogs = useSelector((state) => state.dbDogs);
+
+  // Creamos una variable dog que obtendra valor dependiendo del tipo de ID ingresado
+  let dog = null;
+
+  // Si el id es mayor a 3 digitos (es decir, meyor a las 3 cifras que llegan todos los perros)
+  // Buscamos un id coincidente al ingresado en la base de datos, y dog tendra el valor de ese perro
+  if(id.length>3){dog = dogs.find((dog) => dog.id === id)}
+
+  // De otro modo, buscamos la raza específica en el estado global (dogs) con ese ID de params y lo guardamos en la variable
+  else{dog = dogs.find((dog) => dog.id === parseInt(id));}
+
 
   // Establecemos un tamaño fijo para las imágenes
   const imageWidth = "300px";
   const imageHeight = "300px";
 
-  // Verificar si dog es undefined antes de renderizar los detalles, es decir, recargamos pagina sin entrar al home, podria generar bugs
-  if (!dog) {
-    return <div>Cargando...</div>;
-  }
+
 
   // Renderizado de todos los detalles de la raza
   return (

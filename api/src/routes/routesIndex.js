@@ -78,14 +78,14 @@ routes.get("/dogs/:id", async (req,res) =>{
 routes.post("/dogs", async(req,res) =>{
   try {
     // nos quedamos con las propiedades del body
-    const {name,weight_min,weight_max,height_min,height_max,life_span,temperament,image} = req.body  // temperament es un arreglo de ids
+    const {name,weight,height,life_span,temperament,image} = req.body  // temperament es un arreglo de ids
     
     // verificamos si hubiese ausencia de alguno y retornamos error
-    if( !name || !weight_min || !weight_max || !height_min || !height_max || !life_span || !temperament ){
+    if( !name || !weight || !height || !life_span || !temperament ){
     throw Error("Faltan datos de la raza a crear!")}
 
     // Ejecutamos el controlador y creamos una raza:
-    const newDog = await postRace(name,weight_min,weight_max,height_min,height_max,life_span,temperament,image)
+    const newDog = await postRace(name,weight,height,life_span,temperament,image)
 
     //La devolvemos:
     return res.status(200).json(newDog)

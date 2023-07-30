@@ -1,11 +1,8 @@
-// Importamos useEffect para trabajar con el tiempo de vida de nuestros componentes
-import { useEffect, useState } from "react";
+// Importamos useState para trabajar con estados locales
+import { useState } from "react";
 
-// Importamos funciones de react para despachar acciones y acceder al estado global respectivamente
-import { useDispatch, useSelector } from "react-redux";
-
-// Importamos la accion para obtener todos los perros
-import { getAllDogs , getTemperaments } from "../redux/actions";
+// Importamos funciones de react acceder al estado global
+import { useSelector } from "react-redux";
 
 // Importamos el componente card para crear las necesarias en este componente Cards
 import Card from "./Card";
@@ -16,23 +13,9 @@ const Home = () => {
   
     // FUNCIONES PARA OBTENER LOS DATOS DEL ESTADO GLOBAL
 
-    // Guardamos la funcion despachadora, para enviar las acciones al reducer
-    const dispatch = useDispatch();
-
-    // useEffect() de React. Se utiliza para efectos secundarios en componentes funcionales, como hacer llamadas a una API, En este caso, 
-    // lo usamos para despachar la acción importada getAllDogs() apenas se monte el componente (sea renderizado por primera vez). 
-    // getAllDogs() enviará la solicitud para obtener todos los perros desde la API y actualizará el estado global allDogs.
-    useEffect( () => {dispatch(getAllDogs())}, [dispatch] );
-
-    // Hacemos lo mismo para almacenar los temperamentos traidos de la DB a nuestro estado global, apenas se monte el componente
-    useEffect( () => {dispatch(getTemperaments())}, [dispatch] );
-
-
-
     // useSelector() de redux para guardar una parte del estado global. Su argumento es una función que toma el estado global(state) 
     // como argumento y devuelve la porción deseada. En este caso, el valor del estado allDogs y lo guardamos en la constante "dogs".
     const dogs = useSelector((state) => state.allDogs);
-
 
 
 
@@ -67,9 +50,6 @@ const Home = () => {
           </button>
         ))}
       </div>
-
-
-
 
 
     {/* Mapeado de data para card's */}    

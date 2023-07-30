@@ -1,4 +1,4 @@
-import { GET_ALL_DOGS, GET_TEMPERAMENTS, GET_DOGS_BY_NAME, SORT_BY_NAME, SORT_BY_WEIGHT, FILTER_BY_TEMPERAMENT, POST_DOG} from "./actionTypes";
+import { GET_ALL_DOGS, GET_TEMPERAMENTS, GET_DOGS_BY_NAME, SORT_BY_NAME, SORT_BY_WEIGHT, FILTER_BY_TEMPERAMENT, FILTER_BY_ORIGIN, POST_DOG} from "./actionTypes";
 import axios from "axios";
 
 // Accion para llamada al servidor obteniendo todos los perros:
@@ -98,20 +98,70 @@ export const filterDogsByTemperament = (temperament) => {
       
       // Si el parametro es diferente a la opcion base, filtramos los perros por el temperamento seleccionado
       if(temperament !== "base"){
-      // Creamos una variable que tome el valor del array de todos los perros, es decir, del estado copia tempDogs
-      let filteredDogs = backupDogs
+
+      // Creamos una variable que tome el valor del array de todos los perros, es decir, del estado copia backupDogs
+      let tempfilteredDogs = backupDogs
+
       // A este array lo filtramos por el temperamento recibido por parametro, y en caso seleccionemos otra opcion, volveremos a
       // darle el valor del estado copia, evitando una acumulacion del filtrado
-      filteredDogs = filteredDogs.filter((dog) => dog.temperament && dog.temperament.includes(temperament));
-      // Despachamos accion con payload igual a ese array filtrado, en caso se vuelva a ejecutar, se repite el proceso ya mencionado
-     return dispatch({ type: FILTER_BY_TEMPERAMENT, payload: filteredDogs });}
+      tempfilteredDogs = tempfilteredDogs.filter((dog) => dog.temperament && dog.temperament.includes(temperament));
 
+      // Despachamos accion con payload igual a ese array filtrado, en caso se vuelva a ejecutar, se repite el proceso ya mencionado
+     return dispatch({ type: FILTER_BY_TEMPERAMENT, payload: tempfilteredDogs });}
 
       // De otro modo, es decir, caso base, retornamos unicamente el array copia tempDogs!
       else dispatch({ type: FILTER_BY_TEMPERAMENT, payload: backupDogs});
 
     } catch (error) { console.log(error);}};
 };
+
+
+
+
+// Accion para filtrar perros de la base de datos, asi como los de la API
+export const filterDogsByOrigin = (origin) => {
+  return async function (dispatch, getState) {
+    try {
+      
+      const {backupDogs} = getState();
+      
+      // Si el parametro es diferente a la opcion base, filtramos los perros por el origen seleccionado
+      if(origin === "api"){
+
+      // Creamos una variable que tome el valor del array de todos los perros, es decir, del estado copia backupDogs
+      let originFilteredDogs = backupDogs
+
+      // A este array lo filtramos por el origen recibido por parametro, y en caso seleccionemos otra opcion, volveremos a
+      // darle el valor del estado copia, evitando una acumulacion del filtrado
+      originFilteredDogs = originFilteredDogs.filter(dog => !dog.created);
+
+      // Despachamos accion con payload igual a ese array filtrado, en caso se vuelva a ejecutar, se repite el proceso ya mencionado
+      return dispatch({ type: FILTER_BY_ORIGIN, payload: originFilteredDogs });}
+
+
+
+      // Si el parametro es diferente a la opcion base, filtramos los perros por el origen seleccionado
+      else if(origin === "db"){
+
+      // Creamos una variable que tome el valor del array de todos los perros, es decir, del estado copia backupDogs
+      let originFilteredDogs = backupDogs
+  
+      // A este array lo filtramos por el origen recibido por parametro, y en caso seleccionemos otra opcion, volveremos a
+      // darle el valor del estado copia, evitando una acumulacion del filtrado
+      originFilteredDogs = originFilteredDogs.filter(dog => dog.created);
+  
+      // Despachamos accion con payload igual a ese array filtrado, en caso se vuelva a ejecutar, se repite el proceso ya mencionado
+      return dispatch({ type: FILTER_BY_ORIGIN, payload: originFilteredDogs });}
+
+
+      
+      // De otro modo, es decir, caso base, retornamos unicamente el array copia tempDogs!
+      else dispatch({ type: FILTER_BY_ORIGIN, payload: backupDogs});
+
+  }catch (error) {console.log(error)}};
+};
+
+
 
 
 // Accion para enviar los datos del formulario a la base de datos mediante axios y los metodos ya definidos en el Back

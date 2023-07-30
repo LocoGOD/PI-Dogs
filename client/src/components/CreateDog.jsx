@@ -30,24 +30,37 @@ const CreateDog = () => {
 
 
 
+  
   // Funcion para despachar los datos del form como action cuando se hace click en el submit:
   // El evento que se genera en este caso, sucede cuando el usuario envía el formulario (onSubmit)
   const handleSubmit = async (event) => {
+
     // Prevenimos recargar la página cuando se submitea.
     event.preventDefault();
     try {
-      // Nos guardamos el valor de retorno del despacho de la accion, es decir el objeto creado para mostrarlo en consola
-    const response = await dispatch(postDog(formData));
-    console.log('Respuesta de la acción postDog:', response);
-    // Colocamos todos los campos en blancos una vez se haya completado el submit!
-    setFormData({name: '', weight_min: '', weight_max: '', height_min: '', height_max: '', life_span: '', temperament: '', image: ''});
+
+      // Convertimos los valores numéricos de peso y altura a strings con el formato "min-max"
+      const weightRange = `${formData.weight_min}-${formData.weight_max}`;
+      const heightRange = `${formData.height_min}-${formData.height_max}`;
+  
+      // Creamos un nuevo objeto con los datos del formulario y los valores de peso y altura en formato string
+      const dataToSend = {...formData, weight: weightRange, height: heightRange};
+  
+      // Enviamos el nuevo objeto con los datos en el formato requerido y nos guardamos el valor de retorno del despacho de la accion
+      const response = await dispatch(postDog(dataToSend));
+
+      // Lo mostramos en consola
+      console.log('Respuesta de la acción postDog:', response);
+  
+      // Colocamos todos los campos en blancos una vez se haya completado el submit!
+      setFormData({ name: '', weight_min: '', weight_max: '', height_min: '', height_max: '', life_span: '', temperament: '', image: ''});
     
-    } catch (error) {console.log(error);}
+    } catch (error) {console.error('Error al crear el perro:', error)}
   };
 
+
+
   
-
-
   // Renderizado del formulario:
   return (
     <div>

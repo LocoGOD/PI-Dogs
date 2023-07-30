@@ -1,10 +1,9 @@
-import { GET_ALL_DOGS, GET_TEMPERAMENTS, GET_DOGS_BY_NAME, SORT_BY_NAME, SORT_BY_WEIGHT, FILTER_BY_TEMPERAMENT, POST_DOG} from "./actionTypes";
+import { GET_ALL_DOGS, GET_TEMPERAMENTS, GET_DOGS_BY_NAME, SORT_BY_NAME, SORT_BY_WEIGHT, FILTER_BY_TEMPERAMENT,  FILTER_BY_ORIGIN, POST_DOG} from "./actionTypes";
 
 // Estado global con todas sus propiedades:
 const initialState = {
         allDogs: [],        // Perros que se veran modificados con los filtros
         backupDogs: [],     // En caso de aplicar un filtro exclusivo, el caso default los devolvera sin filtros
-        dbDogs: [],         // Perros nuestros, almacenados en la base de datos
         temperaments: [],   // Temperamentos adquiridos de la base de datos
     }
 
@@ -37,9 +36,13 @@ const reducer = (state = initialState, action) => {
         case FILTER_BY_TEMPERAMENT:
               return { ...state, allDogs: action.payload};
 
-        // Caso para manejar el posteo de un perro, nos guardamos los objetos que posteemos en la propiedad dbDogs
+        // Caso para manejar la acción de filtrar los perros por temperamento
+        case FILTER_BY_ORIGIN:
+              return { ...state, allDogs: action.payload};
+
+        // Caso para manejar el posteo de un perro, nos guardamos los objetos que posteemos en allDogs y backupDogs!
         case POST_DOG:
-            return{...state, dbDogs: action.payload}
+             return {...state, allDogs: [...state.allDogs, action.payload], backupDogs: [...state.backupDogs, action.payload]};
     
         // Caso default devuelve una copia del estado global
         default:

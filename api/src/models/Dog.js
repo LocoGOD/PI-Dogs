@@ -14,20 +14,12 @@ module.exports = (sequelize) => {
       allowNull: false,        
       unique: true              
     },            
-    height_min:{
-      type: DataTypes.INTEGER,
+    height:{
+      type: DataTypes.STRING,
       allowNull: false
     },
-    weight_min:{
-      type: DataTypes.INTEGER,
-      allowNull: false
-    },
-    height_max:{
-      type: DataTypes.INTEGER,
-      allowNull: false
-    },
-    weight_max:{
-      type: DataTypes.INTEGER,
+    weight:{
+      type: DataTypes.STRING,
       allowNull: false
     },
     life_span:{
@@ -35,7 +27,7 @@ module.exports = (sequelize) => {
       allowNull: false
     },
     image:{
-      type: DataTypes.JSON
+      type: DataTypes.STRING
     },
     created:{                   
       type: DataTypes.BOOLEAN,  

@@ -100,10 +100,10 @@ const getRaceByQuery = async(name) =>{
 
 
 // Controlador para postear una raza:
-const postRace = async (name,weight_min,weight_max,height_min,height_max,life_span,temperament,image) =>{
+const postRace = async (name,weight,height,life_span,temperament,image) =>{
     
     //creamos el perro en la base de datos con lo recibido en parametros:
-    const newDog = await Dogs.create({name,weight_min,weight_max,height_min,height_max,life_span,temperament,image})
+    const newDog = await Dogs.create({name,weight,height,life_span,temperament,image})
 
     // Verificamos si temperaments es un arreglo, estos son ids con los cuales podremos ubicarlos en la tabla
     // Tambien chequeamos que su longitud sea mayor a 0, es decir, minimo uno.

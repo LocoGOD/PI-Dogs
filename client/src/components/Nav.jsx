@@ -11,9 +11,10 @@ const location = useLocation()
    return(
         <>  
             {/*Botones hacia otros componentes!*/}
-            <button><Link to="/about">Disclaimer!</Link></button>
-            <button><Link to="/home">Home</Link></button>
-            <button><Link to="/create">Create your dog!</Link></button>
+            <button><Link to="/"> Quit? </Link></button>
+            <button><Link to="/about"> Disclaimer! </Link></button>
+            <button><Link to="/home"> Home </Link></button>
+            <button><Link to="/create"> Create your dog! </Link></button>
             {/*SearchBar y filtros solo disponibles en componente Home!*/}
             {location.pathname==="/home" ? <SearchBar/> : null}
             {location.pathname==="/home" ? <FilterOrder/> : null}
