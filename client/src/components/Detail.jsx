@@ -24,14 +24,14 @@ const Detail = () => {
   // Renderizado de todos los detalles de la raza
   return (
     <div>
-      <h1> Detalles de la raza: </h1>
+      <h1> Breed Details: </h1>
       <h2>{dog.name}</h2>
       <p> Id: {dog.id}</p>
-      <p> Altura: {dog.height.imperial} pulgadas.</p>
-      <p> Peso: entre {dog.weight.imperial} kilos.</p>
-      <p> Esperanza de vida: {dog.life_span}</p>
-      <p> Temperamentos: {dog.temperament}</p>
-      <img src={dog.image.url} alt={dog.name} style={{ width: imageWidth, height: imageHeight }}/>
+      <p> Height: between {dog.height} inches</p>
+      <p> Weight: between {dog.weight} kg's</p>
+      <p> Life Span: {dog.life_span}</p>
+      <p> Temperaments: {dog.temperament}</p>
+      <img src={dog.image} alt={dog.name} style={{ width: imageWidth, height: imageHeight }}/>
     </div>
   );
 }

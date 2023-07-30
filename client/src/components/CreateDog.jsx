@@ -1,91 +1,153 @@
 import React, { useState } from 'react';
+import { useDispatch } from 'react-redux';
+import { postDog } from '../redux/actions';
 
 const CreateDog = () => {
-  const [name, setName] = useState('');
-  const [height, setHeight] = useState('');
-  const [weight, setWeight] = useState('');
-  const [lifeSpan, setLifeSpan] = useState('');
-  const [temperaments, setTemperaments] = useState('');
 
-  const handleNameChange = (e) => {
-    setName(e.target.value);
+  const dispatch = useDispatch();
+
+  const [formData, setFormData] = useState({
+    name: '',
+    weight_min: '',
+    weight_max: '',
+    height_min: '',
+    height_max: '',
+    life_span: '',
+    temperament: '',
+    image: ''
+  });
+
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+
+    // Validar para evitar que se ingresen valores negativos en opciones numéricas
+    if (name === 'weight_min' || name === 'weight_max' || name === 'height_min' || name === 'height_max') {
+      const numericValue = parseFloat(value);
+      if (isNaN(numericValue) || numericValue < 0) {
+        return;
+      }
+    }
+
+    setFormData((prevData) => ({ ...prevData, [name]: value }));
   };
 
-  const handleHeightChange = (e) => {
-    setHeight(e.target.value);
-  };
-
-  const handleWeightChange = (e) => {
-    setWeight(e.target.value);
-  };
-
-  const handleLifeSpanChange = (e) => {
-    setLifeSpan(e.target.value);
-  };
-
-  const handleTemperamentsChange = (e) => {
-    setTemperaments(e.target.value);
-  };
-
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    // Aquí puedes enviar los datos al backend usando axios u otra librería para hacer solicitudes HTTP.
-    // Por ejemplo:
-    // axios.post('/api/dogs', { name, height, weight, lifeSpan, temperaments });
-    // Luego puedes manejar la respuesta del backend, mostrar un mensaje de éxito o error, etc.
+    console.log('Datos del nuevo perro:', formData);
+
+    try {
+      const response = await dispatch(postDog(formData));
+      console.log('Respuesta de la acción postDog:', response);
+
+      setFormData({
+        name: '',
+        weight_min: '',
+        weight_max: '',
+        height_min: '',
+        height_max: '',
+        life_span: '',
+        temperament: '',
+        image: ''
+      });
+    } catch (error) {
+      console.error('Error al crear el perro:', error);
+    }
   };
+
+  
+
 
   return (
-    <form onSubmit={handleSubmit}>
-      
-      <hr/>
-      <h1>Formulario para crear tu raza de perro!</h1>
-
-
-      <label>
-        Name:
-        <input type="text" value={name} onChange={handleNameChange} />
-      </label>
-      
-      <hr/>
-
-      <label>
-        Height:
-        <input type="text" value={height} onChange={handleHeightChange} />
-      </label>
-      
-      <hr/>
-      
-      <label>
-        Weight:
-        <input type="text" value={weight} onChange={handleWeightChange} />
-      </label>
-      
-      <hr/>
-      
-      <label>
-        Life Span:
-        <input type="text" value={lifeSpan} onChange={handleLifeSpanChange} />
-      </label>
-      
-      <hr/>
-      
-      <label>
-        Temperaments:
-        <input type="text" value={temperaments} onChange={handleTemperamentsChange} />
-      </label>
-      
-      <hr/>
-      
-      <label>
-        URL de imagen (opcional):
-        <input type="text" value={temperaments} onChange={handleTemperamentsChange} />
-      </label>
-
-      <hr/>
-
-      <button type="submit">Crear perro!</button>
-    </form>
+    <div>
+      <h1>Crear Nuevo Perro</h1>
+      <form onSubmit={handleSubmit}>
+        <div>
+          <label htmlFor="name">Nombre:</label>
+          <input
+            type="text"
+            id="name"
+            name="name"
+            value={formData.name}
+            onChange={handleChange}
+          />
+        </div>
+        <div>
+          <label htmlFor="weight_min">Peso Mínimo:</label>
+          <input
+            type="number"
+            id="weight_min"
+            name="weight_min"
+            min="0" // Establecer el valor mínimo como 0
+            value={formData.weight_min}
+            onChange={handleChange}
+          />
+        </div>
+        <div>
+          <label htmlFor="weight_max">Peso Máximo:</label>
+          <input
+            type="number"
+            id="weight_max"
+            name="weight_max"
+            min="0" // Establecer el valor mínimo como 0
+            value={formData.weight_max}
+            onChange={handleChange}
+          />
+        </div>
+        <div>
+          <label htmlFor="height_min">Altura Mínima:</label>
+          <input
+            type="number"
+            id="height_min"
+            name="height_min"
+            min="0" // Establecer el valor mínimo como 0
+            value={formData.height_min}
+            onChange={handleChange}
+          />
+        </div>
+        <div>
+          <label htmlFor="height_max">Altura Máxima:</label>
+          <input
+            type="number"
+            id="height_max"
+            name="height_max"
+            min="0" // Establecer el valor mínimo como 0
+            value={formData.height_max}
+            onChange={handleChange}
+          />
+        </div>
+        <div>
+          <label htmlFor="life_span">Esperanza de Vida:</label>
+          <input
+            type="text"
+            id="life_span"
+            name="life_span"
+            value={formData.life_span}
+            onChange={handleChange}
+          />
+        </div>
+        <div>
+          <label htmlFor="temperament">Temperamento:</label>
+          <input
+            type="text"
+            id="temperament"
+            name="temperament"
+            value={formData.temperament}
+            onChange={handleChange}
+          />
+        </div>
+        <div>
+          <label htmlFor="image">URL de la Imagen:</label>
+          <input
+            type="text"
+            id="image"
+            name="image"
+            value={formData.image}
+            onChange={handleChange}
+          />
+        </div>
+        <button type="submit">Crear Perro</button>
+      </form>
+    </div>
   );
 };
 

@@ -13,8 +13,8 @@ function Card({id,name,weight,temperament,image}){ //props recibidas de Cards!
          {/*Desplegamos el nombre que recibimos por parametro en el componente, con un link al hacer click hacia su detail*/}
          <Link to={"/detail/"+id}><h2>{name}</h2></Link>
 
-         <p> Peso: entre {weight.imperial} kilos</p>
-         <p> Temperamentos: {temperament}</p>
+         <p> Weight between {weight} kg's</p>
+         <p> Temperaments: {temperament} </p>
 
          {/*Y la imagen con resolucion definida arriba*/}
          <img src={image} alt='raza' style={{ width: imageWidth, height: imageHeight }}/>

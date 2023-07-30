@@ -14,12 +14,20 @@ module.exports = (sequelize) => {
       allowNull: false,         //no puede estar vacio
       unique: true              //debe ser único
     },            
-    height:{
-      type: DataTypes.STRING,
-      allowNull: false,
+    height_min:{
+      type: DataTypes.INTEGER,
+      allowNull: false
     },
-    weight:{
-      type: DataTypes.STRING,
+    weight_min:{
+      type: DataTypes.INTEGER,
+      allowNull: false
+    },
+    height_max:{
+      type: DataTypes.INTEGER,
+      allowNull: false
+    },
+    weight_max:{
+      type: DataTypes.INTEGER,
       allowNull: false
     },
     life_span:{
@@ -27,11 +35,12 @@ module.exports = (sequelize) => {
       allowNull: false
     },
     image:{
-      type: DataTypes.STRING
+      type: DataTypes.JSON
     },
-    created:{                   // Otorgamos propiedad created para saber si es creado por nosotros o no...
-      type: DataTypes.BOOLEAN,  // Sera un booleano en true!
-      defaultValue: true
+    created:{                   
+      type: DataTypes.BOOLEAN,  
+      defaultValue: true,
+      allowNull: false
     }
   },
   {timestamps:false})   // impide la creacion de 2 columnas adicionales en la tabla, que muestran fecha de creacion y actualizacion);
