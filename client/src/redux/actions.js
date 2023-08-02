@@ -162,7 +162,7 @@ export const filterDogsByOrigin = (origin) => {
 export const postDog = (formData) => {
   return async function (dispatch) {
     // Una vez recibidos los datos del form en formData, los posteamos, nos quedamos con el dog creado y lo enviamos como payload 
-    // hacia el estado global en caso de que lo necesitemos para trabajar
+    // hacia el estado global y sus propiedades en caso de que lo necesitemos para trabajar
     try {
       const {data} = await axios.post('http://localhost:3001/dogs', formData);
       alert("Creation succesful!")

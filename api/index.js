@@ -1,4 +1,4 @@
-const server = require('./src/app.js');
+const server = require("./src/app");
 const {conn} = require('./src/db.js');
 
 conn.sync({force:true}).then(    // La ejecutamos con el comando sync, junto con un parametro de objeto "force" que sirve para forzar

@@ -9,10 +9,10 @@ const Nav = ({handlePageChange}) => {
 // Podemos acceder a la ubicacion actual usando la variable creada location.pathname!
 const location = useLocation()   
 
-// Funcion para manejar alerta saliendo hacia landing
+// Funcion para manejar la alerta en caso de QUIT
 const handleQuitClick = () => {
     const confirmed = window.confirm("Are you sure you want to QUIT? All your dogs will be lost");
-    if (confirmed){window.location = "/"}};
+    if(confirmed) {window.location = "/"}};
 
 
 // Renderizado

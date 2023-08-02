@@ -5,7 +5,7 @@ import { useDispatch, useSelector } from 'react-redux';
 // traemos la accion postDog!
 import { postDog } from '../../redux/actions';
 
-import { ContainerStyles , InputStyles , SubmitButton, TemperamentsContainer } from './CreateDogStyles';
+import { ContainerStyles , InputStyles , SubmitButton, TemperamentsContainer , CheckBoxStyled, SummaryButton} from './CreateDogStyles';
 
 // Componente de formulario para creacion de perros:
 const CreateDog = () => {
@@ -13,8 +13,8 @@ const CreateDog = () => {
   // Funcion despachadora
   const dispatch = useDispatch();
 
-  // Nuevo estado local para controlar el estado de las checkboxes
-  const [checkedTemperaments, setCheckedTemperaments] = useState({});
+  // estado para controlar el estado de las checkboxes
+  const [selectedTemperaments, setSelectedTemperaments] = useState({});
 
   // Estado local con los datos que obtendremos de los distintos inputs
   const [formData, setFormData] = useState({
@@ -84,7 +84,7 @@ const CreateDog = () => {
       setFormData({ name: '', weight_min: '', weight_max: '', height_min: '', height_max: '', life_span: '', temperaments: '', image: ''});
     
       // Restablecemos el estado local para deseleccionar las checkboxes
-      setCheckedTemperaments({});
+      setSelectedTemperaments({});
 
     } catch (error) {console.error('Error al crear el perro:', error)}
   };
@@ -95,7 +95,7 @@ const CreateDog = () => {
   // Función para manejar los cambios en un checkbox de temperamentos individual
   const handleSingleTemperamentSelect = (event) => {
     const temperamentId = event.target.value;
-    setCheckedTemperaments((prevChecked) => ({
+    setSelectedTemperaments((prevChecked) => ({
       ...prevChecked,
       [temperamentId]: !prevChecked[temperamentId], // Invertimos el valor actual del temperamento seleccionado
     }));
@@ -104,8 +104,8 @@ const CreateDog = () => {
 
   // Función para obtener los IDs de los temperamentos seleccionados como enteros
   const getSelectedTemperamentIds = () => {
-    return Object.keys(checkedTemperaments).filter(
-      (temperamentId) => checkedTemperaments[temperamentId]
+    return Object.keys(selectedTemperaments).filter(
+      (temperamentId) => selectedTemperaments[temperamentId]
     ).map(Number);
   };
 
@@ -160,26 +160,24 @@ const CreateDog = () => {
 
 
 
-           {/* Lista de selección para elegir los temperamentos */}
-           <div>
-        <label>Temperaments:</label>
-        <TemperamentsContainer>
-        {APItemperaments.map((temperament) => (
-          <div key={temperament.id}>
-            <input
-              type="checkbox"
-              id={temperament.id}
-              name={temperament.name}
-              value={temperament.id}
-              onChange={handleSingleTemperamentSelect}
-              checked={checkedTemperaments[temperament.id] || false} // Enlazamos el atributo checked con el nuevo estado local
-            />
-            <label htmlFor={temperament.id}>{temperament.name}</label>
-          </div>
-        ))}
-        </TemperamentsContainer>
-
-      </div>
+        <details>
+          <SummaryButton>Select temperaments:</SummaryButton>
+          <TemperamentsContainer>
+            {APItemperaments.map((temperament) => (
+              <div key={temperament.id}>
+                <CheckBoxStyled   
+                  type="checkbox"
+                  id={temperament.id}
+                  name={temperament.name}
+                  value={temperament.id}
+                  onChange={handleSingleTemperamentSelect}
+                  checked={selectedTemperaments[temperament.id] || false}
+                />
+                <label htmlFor={temperament.id}>{temperament.name}</label>
+              </div>
+            ))}
+         </TemperamentsContainer> 
+        </details>
 
 
 

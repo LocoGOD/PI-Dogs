@@ -4,9 +4,9 @@ const express = require('express');   //Express
 const cookieParser = require('cookie-parser');
 const bodyParser = require('body-parser');
 const morgan = require('morgan');
-const routes = require('./routes/routesIndex.js');
+const routes = require('./routes/routesIndex');
 
-require('./db.js');     // Nos traemos la base de datos
+require("./db");     // Nos traemos la base de datos
 
 const server = express();
 

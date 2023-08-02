@@ -25,6 +25,7 @@ const [currentPage, setCurrentPage] = useState(1);
 // Funcion para setear las paginas al numero ingresado por parametro, la usamos para volver a la pagina 1, generalmente
 const handlePageChange = (pageNumber) => {setCurrentPage(pageNumber);};
 
+
 // Renderizado
   return (
     <div className="App">

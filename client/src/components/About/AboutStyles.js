@@ -11,10 +11,8 @@ text-align: center;     /*todo centrado*/
 
 // Titulo principal
 export const Title = styled.h1
-` 
-  
+` text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
   color: white;
-  font-size: 25px;  /*tamaño de la fuente*/
   margin-bottom: 30px;  /*margen inferior*/
   margin.top:10px;
   font-family: 'Open Sans', sans-serif;   /*tipo de fuente*/
@@ -25,14 +23,15 @@ export const Title = styled.h1
 export const AboutContainer = styled.div`
 font-family: 'Genos', sans-serif;
   color: white;
-  margin-bottom: 10px;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
   padding: 20px;
   background-color: #f0f0f0;
-  border-radius: 10px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   text-align: center;
   background-image: url("/bgAbout.jpg"); /* Ajusta la ruta de la imagen */
   background-size: cover;
+  background-attachment: fixed; /* Fija la imagen de fondo */
+  min-height: 100vh; /* Establece una altura mínima de la ventana visible (100% del viewport height) */
 `;
 
 export const AboutImage = styled.img`
@@ -45,7 +44,6 @@ export const AboutImage = styled.img`
 `;
 
 export const AboutLink = styled.a`
-  margin-right: 100%;
   color: #007bff;
   text-decoration: none;
   margin: 5px;

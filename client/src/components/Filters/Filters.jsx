@@ -24,7 +24,7 @@ const FilterOrder = ({ handlePageChange }) =>{
   // // useEffect para aplicar las opciones guardadas, se lanzara siempre que el componente sea MONTADO
   useEffect(() => {
         // Nos guardamos variables para cada opcion, nos quedamos con cada valor, buscandolo por su propiedad "value", que es sera 
-        // diferente para cada opcion, y las almacenamos en memoria con el metodo localStorage   
+        // diferente para cada opcion, DESDE LA MEMORIA LOCAL, SI QUEDO ALGUNA SELECCIONADA  
         const storedNameSort = localStorage.getItem("nameSort");
         const storedWeightSort = localStorage.getItem("weightSort");
         const storedOriginFilter = localStorage.getItem("originFilter");
@@ -37,7 +37,8 @@ const FilterOrder = ({ handlePageChange }) =>{
         if (storedTemperamentFilter) setTemperamentFilter(storedTemperamentFilter)}, []);
 
 
-  // useEffect que se ejecuta cada vez que los estados locales de las opciones cambian, es decir, cuando el usuario cambia de opcion,
+
+  // useEffect que que se ejecuta cada vez que los estados locales de las opciones cambian, es decir, cuando el usuario cambia de opcion,
   // se guarda el nuevo valor de la misma en la memoria local utilizando la clave que le corresponda. 
   useEffect(() => {
     localStorage.setItem("nameSort", nameSort);
@@ -136,7 +137,7 @@ const FilterOrder = ({ handlePageChange }) =>{
             </OptionStyle>
 
 
-            Filter y origin:  
+            Filter by origin:  
             {/* Opción desplegable para ordenar por origen(API/DB)*/}
             <OptionStyle onChange={handleOriginFilterChange} value={originFilter}>
                 <option value="base">---</option>

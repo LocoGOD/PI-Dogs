@@ -16,7 +16,10 @@ const Home = ({ currentPage, handlePageChange }) => {
     // Cantidad de perros a mostrar por página
     const itemsPerPage = 8;
 
-    // Calculamos el índice inicial y final de los perros a mostrar en la página actual
+
+    // Calculamos índice inicial y final de los perros a mostrar en la página actual
+    // Multiplicando el número de página (currentPage) por la cantidad de perros por página (itemsPerPage). 
+    // El índice inicial es indexOfFirstDog, y el índice final es indexOfLastDog.
     const indexOfLastDog = currentPage * itemsPerPage;
     const indexOfFirstDog = indexOfLastDog - itemsPerPage;
     const currentDogs = dogs.slice(indexOfFirstDog, indexOfLastDog);
@@ -26,12 +29,12 @@ const Home = ({ currentPage, handlePageChange }) => {
 // Renderizado - Mapeamos "dogs" que tiene datos del estado global y renderizamos una card por cada dog, tambien definimos el paginado!
   return (
     <HomeContainer>
-      
       {/* Paginación */}
       <div className="pagination">
-        {Array.from({ length: Math.ceil(dogs.length / itemsPerPage) }).map((_, index) => (
+        {Array.from({length: Math.ceil(dogs.length/itemsPerPage)}).map((_, index) => (
         <PagButton key={index} onClick={() => handlePageChange(index + 1)}>{index + 1}</PagButton>))}
       </div>
+
 
     {/* Mapeado de data para card's */}    
     <CardRow> 
@@ -48,7 +51,6 @@ const Home = ({ currentPage, handlePageChange }) => {
       })}
     </CardRow> 
     </HomeContainer>
-    
   );
 }
 

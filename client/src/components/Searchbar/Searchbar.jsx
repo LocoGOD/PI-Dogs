@@ -12,6 +12,7 @@ const SearchBar = () => {
    // Obtenemos la función para despachar a Redux
    const dispatch = useDispatch();
 
+
   // useEffect para aplicar el input guardado, se lanzara siempre que el componente sea MONTADO
   useEffect(() => {
    // Variable para el input, nos quedamos con su valor, buscandolo por propiedad "value", que es "name", y lo almacenamos en memoria 
@@ -21,6 +22,7 @@ const SearchBar = () => {
    // decir, la devolvemos a como estaba antes de abandonar el componente (desmontarlo)
    if(storedName) setName(storedName)}, []);
 
+   
   // useEffect que se ejecuta cada vez que el estado local name cambia, es decir, cuando el usuario ingresa un nuevo valor en el input.
   // Este guarda el nuevo valor del input en la memoria local utilizando la clave "name". 
   useEffect(() => {localStorage.setItem("name", name)}, [name]);
@@ -32,22 +34,12 @@ const SearchBar = () => {
    setName(newName); // Pisamos el estado local con el nuevo valor, continuamente
    dispatch(getDogsByName(newName))} // Despachar la acción cada vez que el valor sea actualizado
     
-  
-  // Función para manejar la búsqueda al hacer clic en el botón
-  // Llamamos a la acción importada para obtener el perro por nombre, usando como argumento al estado local
-  // Limpiamos el valor del estado local (barra) para futuras búsquedas
-  // const handleSearch = () => {dispatch(getDogsByName(name)); setName("")}
-
-  
 
 // Renderizado
    return (
       <div>
          {/*EL input mencionado anteriormente, el cual linkea el estado local con el input para poder enviar el nombre a buscar*/}
          Search by name: <SearchBarStyle type='search' placeholder="Try me!" onChange = {handleChange} value={name}></SearchBarStyle>
-
-         {/* Boton search, hacemos un llamado a la funcion handleSearch (despachadora) usando el estado local definido parametro 
-         <button type="submit" onClick = {handleSearch} > Search a dog! </button>  */}
       </div>
    );
 }

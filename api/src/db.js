@@ -46,9 +46,10 @@ sequelize.models = Object.fromEntries(capsEntries);
 // Para relacionarlos hacemos un destructuring
 const { Dog, Temperament } = sequelize.models;
 
+
+// Generamos la relacion de muchos a muchos
 Dog.belongsToMany(Temperament, {through: "dog_temperament", timestamps: false,});
 Temperament.belongsToMany(Dog, {through: "dog_temperament",timestamps: false,});
-
 
 
 module.exports = {...sequelize.models, conn: sequelize};
