@@ -2,49 +2,58 @@ import { GET_ALL_DOGS, GET_TEMPERAMENTS, GET_DOGS_BY_NAME, SORT_BY_NAME, SORT_BY
 
 // Estado global con todas sus propiedades:
 const initialState = {
-        allDogs: [],        // Perros que se veran modificados con los filtros
-        backupDogs: [],     // En caso de aplicar un filtro exclusivo, el caso default los devolvera sin filtros
-        temperaments: [],   // Temperamentos adquiridos de la base de datos
-    }
+        allDogs: [],        // Todos los perros, que se veran modificados con el orden y los filtros
+        backupDogs: [],     // En caso de aplicar un filtro o varios, el caso default los devolvera a la forma original
+        temperaments: []    // Temperamentos adquiridos de la base de datos
+    }   
+
 
 // Reducer 
 const reducer = (state = initialState, action) => {
-    // Segun el tipo de accion despachada
+    // Segun el tipo de accion despachada...
     switch (action.type){
-        // Si es getAllDogs, ejecuta su payload que es la llamada al servidor para todos los perros y los guarda en el estado global
-        // y sus copias correspondientes en caso de querer borrar filtrados
+
+        // Caso getAllDogs, obtiene su payload que es la llamada al servidor para todos los perros y los guarda en el estado global
+        // "allDogs" y tambien en su propiedad "backupDogs", en caso de querer reestablecer filtros
         case GET_ALL_DOGS:
-            return {...state,allDogs:action.payload, backupDogs:action.payload};
+            return {...state,allDogs:action.payload, backupDogs:action.payload, allFilteredDogs:action.payload};
           
+        // Caso getTemperaments, su payload sale de la llamada a la base de datos, obteniendo los temperamentos, guardandolos en la 
+        // propiedad "temperaments" del estado local
         case GET_TEMPERAMENTS:
-        // Guarda el estado global entero y pisa la propiedad temperaments
         return{...state, temperaments: action.payload}
         
-        // Si es getDogsByName, ejecuta su payload que es la llamada al servidor para buscar por query
+        // Caso getDogsByName, su payload sale de la llamada al servidor para buscar por query, obteniendo un array con las coincidencias,
+        // y pisando el array allDogs
         case GET_DOGS_BY_NAME:
             return{...state, allDogs: action.payload };
 
-        // Si es sortDogsByName, ejecuta su payload que es la llamada al servidor para ordenar dependiendo de la option
+        // Caso sortDogsByName, su payload sale de la accion correspondiente, obteniendo un array ordenado segun la especificacion, y
+        // pisando con ese valor a la propiedad allDogs
         case SORT_BY_NAME:
             return { ...state, allDogs: action.payload };
 
-        // Caso para manejar la acción de ordenar los perros por peso
+        // Caso sortByWeight, su payload sale de la accion correspondiente, obteniendo un array ordenado segun la especificacion, y
+        // pisando con ese valor a la propiedad allDogs
         case SORT_BY_WEIGHT:
             return { ...state, allDogs: action.payload };
 
-        // Caso para manejar la acción de filtrar los perros por temperamento
+        // Caso filterByTemperament, su payload sale de la accion correspondiente, obteniendo un array filtrado segun la especificacion, y
+        // pisando con ese valor a la propiedad allDogs
         case FILTER_BY_TEMPERAMENT:
               return { ...state, allDogs: action.payload};
 
-        // Caso para manejar la acción de filtrar los perros por temperamento
+        // Caso filterByOrigin, su payload sale de la accion correspondiente, obteniendo un array filtrado segun la especificacion, y
+        // pisando con ese valor a la propiedad allDogs
         case FILTER_BY_ORIGIN:
               return { ...state, allDogs: action.payload};
 
-        // Caso para manejar el posteo de un perro, nos guardamos los objetos que posteemos en allDogs y backupDogs!
+        // Caso postDog, su payload sale del objeto creado en el form, y enviado con el metodo post en su action correspondiente, y a este
+        // nos lo guardamos tanto en allDogs como en backupDogs para poder aplicarle los filtros creados.
         case POST_DOG:
              return {...state, allDogs: [...state.allDogs, action.payload], backupDogs: [...state.backupDogs, action.payload]};
     
-        // Caso default devuelve una copia del estado global
+        // Caso default, devuelve una copia del estado global.
         default:
             return {...state};
     }

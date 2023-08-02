@@ -1,3 +1,4 @@
+// Action-types para evitar errores ortograficos
 export const GET_ALL_DOGS = "SET_ALL_RACES"
 export const GET_TEMPERAMENTS = "GET_TEMPERAMENTS"
 export const GET_DOGS_BY_NAME = "GET_DOGS_BY_NAME"

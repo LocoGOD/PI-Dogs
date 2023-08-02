@@ -1,13 +1,9 @@
 const express = require("express")  //Para trabajar en archivos separados con Rutas, traemos express nuevamente
 const routes = express.Router()      // Creamos constante para las rutas ejecutando la propiedad Router de express
 // A partir de ahora haremos las rutas con el nombre dado al ejecutar router, routes en este caso!
-const axios = require("axios")
 
 // Importamos controladores
-const {getApiData,getAllRaces,getRaceById,getRaceByQuery,postRace,getTemperaments} = require("../controllers/controllersIndex")
-
-// Acceso a los modelos (tablas)
-const {Dogs,Temperaments} = require("../db")
+const {getAllRaces,getRaceById,getRaceByQuery,postRace,getTemperaments} = require("../controllers/controllersIndex")
 
 
 
@@ -33,8 +29,6 @@ routes.get("/dogs", async(req, res) => {
   
 
 
-
-
 // Ruta para traer los temperamentos:
 routes.get("/temperaments", async (req,res) =>{
     try {
@@ -45,10 +39,8 @@ routes.get("/temperaments", async (req,res) =>{
         res.status(200).json(temperaments);
 
     } catch (error) {
-      return res.status(400).send("Ha ocurrido un error adquiriendo los temperamentos")}
+      return res.status(400).send("An error has occured gathering temperaments")}
 })
-
-
 
 
 
@@ -73,19 +65,18 @@ routes.get("/dogs/:id", async (req,res) =>{
 
 
 
-
 // Ruta para crear razas en nuestra base de datos
 routes.post("/dogs", async(req,res) =>{
   try {
     // nos quedamos con las propiedades del body
-    const {name,weight,height,life_span,temperament,image} = req.body  // temperament es un arreglo de ids
+    const {name,weight,height,life_span,temperaments,image} = req.body  // temperaments es un arreglo de ids
     
     // verificamos si hubiese ausencia de alguno y retornamos error
-    if( !name || !weight || !height || !life_span || !temperament ){
-    throw Error("Faltan datos de la raza a crear!")}
+    if( !name || !weight || !height || !life_span ){
+    throw Error("There is missing data, please fill all the gaps!")}
 
     // Ejecutamos el controlador y creamos una raza:
-    const newDog = await postRace(name,weight,height,life_span,temperament,image)
+    const newDog = await postRace(name,weight,height,life_span,temperaments,image)
 
     //La devolvemos:
     return res.status(200).json(newDog)
@@ -94,14 +85,6 @@ routes.post("/dogs", async(req,res) =>{
     return res.status(404).send(error.message)
   }
 })
-
-
-
-
-
-
-
-
 
 
 
